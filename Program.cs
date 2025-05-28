@@ -276,21 +276,16 @@
 
                 while (true)
                 {
-                    Console.Write("Do you want to play again? (y/n): ");
-                    string? playAgain = Console.ReadLine()?.ToLower();
-                    if (playAgain == "y" || playAgain == "yes")
+                    Console.WriteLine("Press enter to continue or 0 to exit the game.");
+                    string? input = Console.ReadLine();
+                    if (input == "0")
                     {
-                        nextMessage = "Starting a new game...";
-                        break; // Exit the loop to start a new game
-                    }
-                    else if (playAgain == "n" || playAgain == "no")
-                    {
-                        Console.WriteLine("Thank you for playing! Goodbye!");
+                        Console.WriteLine("Exiting the game. Thank you for playing!");
                         return; // Exit the game
                     }
-                    else
+                    if (string.IsNullOrEmpty(input))
                     {
-                        Console.WriteLine("Invalid input. Please enter 'y' or 'n'.");
+                        break; // Continue to the next iteration of the loop
                     }
                 }
             }
