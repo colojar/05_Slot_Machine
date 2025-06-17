@@ -96,31 +96,31 @@
                         {
                             switch (mode)
                             {
-                                case 0:
+                                case QUIT_NUM:
                                     nextMessage = "Exiting the game. Thank you for playing!";
                                     quit = 1;
                                     break;
-                                case 1:
+                                case GAME_MODE_CENTER_NUM:
                                     Console.WriteLine($"You chose '{GAME_MODE_CENTER}' mode. Cost: {COST_CENTER * bet}");
                                     gameMode = GAME_MODE_CENTER;
                                     costMultiplier = COST_CENTER;
                                     break;
-                                case 2:
+                                case GAME_MODE_HORIZONTAL_NUM:
                                     Console.WriteLine($"You chose '{GAME_MODE_HORIZONTAL}' mode. Cost: {COST_HORIZONTAL * bet}");
                                     gameMode = GAME_MODE_HORIZONTAL;
                                     costMultiplier = COST_HORIZONTAL;
                                     break;
-                                case 3:
+                                case GAME_MODE_VERTICAL_NUM:
                                     Console.WriteLine($"You chose '{GAME_MODE_VERTICAL}' mode. Cost: {COST_VERTICAL * bet}");
                                     gameMode = GAME_MODE_VERTICAL;
                                     costMultiplier = COST_VERTICAL;
                                     break;
-                                case 4:
+                                case GAME_MODE_DIAGONAL_NUM:
                                     Console.WriteLine($"You chose '{GAME_MODE_DIAGONAL}' mode. Cost: {COST_DIAGONAL * bet}");
                                     gameMode = GAME_MODE_DIAGONAL;
                                     costMultiplier = COST_DIAGONAL;
                                     break;
-                                case 5:
+                                case GAME_MODE_ALL_NUM:
                                     Console.WriteLine($"You chose '{GAME_MODE_ALL}' mode. Cost: {COST_ALL * bet}");
                                     gameMode = GAME_MODE_ALL;
                                     costMultiplier = COST_ALL;
