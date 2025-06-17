@@ -61,18 +61,23 @@
 
             while (true)
             {
-                Console.Clear();
-                Console.WriteLine();
-                Console.WriteLine($"Your current bank: {bank}");
-                Console.WriteLine();
-
                 if (!string.IsNullOrEmpty(nextMessage))
                 {
+                    Console.Clear(); // Clear the console before displaying the next message
                     Console.WriteLine();
                     Console.WriteLine(nextMessage); // Display the message from the previous iteration
                     Console.WriteLine();
                     nextMessage = ""; // Clear the message after displaying it
                 }
+                if (quit == 1)
+                {
+                    return; // Exit the game
+                }
+
+                Console.WriteLine();
+                Console.WriteLine($"Your current bank: {bank}");
+                Console.WriteLine();
+
                 while (true)
                 {
                     Console.WriteLine("Choose a gamemode. 0-5");
@@ -89,8 +94,9 @@
                         switch (mode)
                         {
                             case 0:
-                                Console.WriteLine("Exiting the game. Thank you for playing!");
-                                return; // Exit the game
+                                nextMessage = "Exiting the game. Thank you for playing!";
+                                quit = 1;
+                                break;
                             case 1:
                                 Console.WriteLine($"You chose '{GAME_MODE_CENTER}' mode. Cost: {COST_CENTER * bet}");
                                 gameMode = GAME_MODE_CENTER;
@@ -122,6 +128,10 @@
                         }
                         break; // Exit the loop if a valid choice is made
                     }
+                }
+                if (quit == 1)
+                {
+                    continue;
                 }
 
                 Console.Clear();
