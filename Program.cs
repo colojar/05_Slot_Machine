@@ -154,7 +154,7 @@
                     {
                         Console.WriteLine("Insufficient funds. Please enter a valid bet.");
                     }
-                    if (bet < 0)
+                    if (bet == 0)
                     {
                         Console.WriteLine("Exiting the game. Thank you for playing!");
                         return; // Exit the game
@@ -166,6 +166,7 @@
                 Console.WriteLine();
                 Console.WriteLine($"Game mode: {gameMode}");
                 Console.WriteLine($"Your current bank: {bank}");
+                Console.WriteLine($"Your bet: {bet} (Cost: {costMultiplier * bet})");
                 Console.WriteLine();
 
                 // Generate a grid
