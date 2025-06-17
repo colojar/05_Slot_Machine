@@ -202,14 +202,27 @@
                 if (gameMode == GAME_MODE_CENTER)
                 {
                     // Check center column
-                    if (slotMachine[0, 1] == slotMachine[1, 1] && slotMachine[1, 1] == slotMachine[2, 1])
-                    { hasWon = 1; }
+                        int centerCol = COLUMNS / 2;
+                        bool centerMatch = true;
+                        for (int i = 1; i < ROWS; i++)
+                        {
+                            if (slotMachine[i, centerCol] != slotMachine[0, centerCol])
+                            {
+                                centerMatch = false;
+                                break;
+                            }
+                        }
+                        if (centerMatch) hasWon = 1;
+
                     if (hasWon > 0)
                     {
                         bank += bet * costMultiplier * BETMULTIPLIER;
                         Console.WriteLine($"You won {hasWon} times in {GAME_MODE_CENTER} mode!");
                     }
+                        else
+                        {
                     Console.WriteLine($"No matches in {GAME_MODE_CENTER} mode.");
+                        }
                    
                 }
                 if (gameMode == GAME_MODE_HORIZONTAL)
@@ -217,77 +230,171 @@
                     // Check horizontal rows
                     for (int i = 0; i < ROWS; i++)
                     {
-                        if (slotMachine[i, 0] == slotMachine[i, 1] && slotMachine[i, 1] == slotMachine[i, 2])
-                        { hasWon += 1; }
-
+                            bool rowMatch = true;
+                            for (int j = 1; j < COLUMNS; j++)
+                            {
+                                if (slotMachine[i, j] != slotMachine[i, 0])
+                                {
+                                    rowMatch = false;
+                                    break;
                     }
+                            }
+                            if (rowMatch) hasWon += 1;
+                        }
+
+                        if (hasWon > 0)
+                        {
                     bank += bet * costMultiplier * BETMULTIPLIER * hasWon;
                     Console.WriteLine($"You won {hasWon} times in {GAME_MODE_HORIZONTAL} mode!");
                 }
+                        else
+                        {
+                            Console.WriteLine($"No matches in {GAME_MODE_HORIZONTAL} mode.");
+                        }
+                    }
+
                 if (gameMode == GAME_MODE_VERTICAL)
                 {
                     // Check vertical columns
                     for (int j = 0; j < COLUMNS; j++)
                     {
-                        if (slotMachine[0, j] == slotMachine[1, j] && slotMachine[1, j] == slotMachine[2, j])
-                        { hasWon += 1; }
-
+                            bool colMatch = true;
+                            for (int i = 1; i < ROWS; i++)
+                            {
+                                if (slotMachine[i, j] != slotMachine[0, j])
+                                {
+                                    colMatch = false;
+                                    break;
                     }
+                            }
+                            if (colMatch) hasWon += 1;
+                        }
+
                     if (hasWon > 0)
                     {
                         bank += bet * costMultiplier * BETMULTIPLIER * hasWon;
                         Console.WriteLine($"You won {hasWon} times in {GAME_MODE_VERTICAL} mode!");
                     }
+                        else
+                        {
                     Console.WriteLine($"No matches in {GAME_MODE_VERTICAL} mode.");
                 }
+                    }
                 if (gameMode == GAME_MODE_DIAGONAL)
                 {
-                    // Check diagonals
-                    if (slotMachine[0, 0] == slotMachine[1, 1] && slotMachine[1, 1] == slotMachine[2, 2])
-                        { hasWon += 1; }
+                        // Top-left to bottom-right
+                        bool diag1Match = true;
+                        for (int i = 1; i < Math.Min(ROWS, COLUMNS); i++)
+                        {
+                            if (slotMachine[i, i] != slotMachine[0, 0])
+                            {
+                                diag1Match = false;
+                                break;
+                            }
+                        }
+                        if (diag1Match) hasWon += 1;
 
-                    if (slotMachine[0, 2] == slotMachine[1, 1] && slotMachine[1, 1] == slotMachine[2, 0])
-                        { hasWon += 1; }
+                        // Top-right to bottom-left
+                        bool diag2Match = true;
+                        for (int i = 1; i < Math.Min(ROWS, COLUMNS); i++)
+                        {
+                            if (slotMachine[i, COLUMNS - 1 - i] != slotMachine[0, COLUMNS - 1])
+                            {
+                                diag2Match = false;
+                                break;
+                            }
+                        }
+                        if (diag2Match) hasWon += 1;
 
                     if (hasWon > 0)
                     {
                         bank += bet * costMultiplier * BETMULTIPLIER * hasWon;
                         Console.WriteLine($"You won {hasWon} times in {GAME_MODE_DIAGONAL} mode!");
                     }
+                        else
+                        {
                     Console.WriteLine($"No matches in {GAME_MODE_DIAGONAL} mode.");
                 }
+                    }
                 if (gameMode == GAME_MODE_ALL)
                 {
                     // Check center column
-                    if (slotMachine[0, 1] == slotMachine[1, 1] && slotMachine[1, 1] == slotMachine[2, 1])
+                        int centerCol = COLUMNS / 2;
+                        bool centerMatch = true;
+                        for (int i = 1; i < ROWS; i++)
                     {
-                        hasWon += 1;
-                        bank += bet * costMultiplier * BETMULTIPLIER;
+                            if (slotMachine[i, centerCol] != slotMachine[0, centerCol])
+                            {
+                                centerMatch = false;
+                                break;
+                            }
                     }
+                        if (centerMatch) hasWon = 1;
+
                     // Check horizontal rows
                     for (int i = 0; i < ROWS; i++)
                     {
-                        if (slotMachine[i, 0] == slotMachine[i, 1] && slotMachine[i, 1] == slotMachine[i, 2])
-                        { hasWon += 1; }
+                            bool rowMatch = true;
+                            for (int j = 1; j < COLUMNS; j++)
+                            {
+                                if (slotMachine[i, j] != slotMachine[i, 0])
+                                {
+                                    rowMatch = false;
+                                    break;
+                                }
+                            }
+                            if (rowMatch) hasWon += 1;
                     }
+
                     // Check vertical columns
                     for (int j = 0; j < COLUMNS; j++)
                     {
-                        if (slotMachine[0, j] == slotMachine[1, j] && slotMachine[1, j] == slotMachine[2, j])
-                        { hasWon += 1; }
+                            bool colMatch = true;
+                            for (int i = 1; i < ROWS; i++)
+                            {
+                                if (slotMachine[i, j] != slotMachine[0, j])
+                                {
+                                    colMatch = false;
+                                    break;
+                                }
+                            }
+                            if (colMatch) hasWon += 1;
+                        }
+
+                        // Top-left to bottom-right
+                        bool diag1Match = true;
+                        for (int i = 1; i < Math.Min(ROWS, COLUMNS); i++)
+                        {
+                            if (slotMachine[i, i] != slotMachine[0, 0])
+                            {
+                                diag1Match = false;
+                                break;
+                            }
+                        }
+                        if (diag1Match) hasWon += 1;
+
+                        // Top-right to bottom-left
+                        bool diag2Match = true;
+                        for (int i = 1; i < Math.Min(ROWS, COLUMNS); i++)
+                        {
+                            if (slotMachine[i, COLUMNS - 1 - i] != slotMachine[0, COLUMNS - 1])
+                            {
+                                diag2Match = false;
+                                break;
                     }
-                    // Check diagonals
-                    if (slotMachine[0, 0] == slotMachine[1, 1] && slotMachine[1, 1] == slotMachine[2, 2])
-                    { hasWon += 1; }
-                    if (slotMachine[0, 2] == slotMachine[1, 1] && slotMachine[1, 1] == slotMachine[2, 0])
-                    { hasWon += 1; }
+                        }
+                        if (diag2Match) hasWon += 1;
+
                     if (hasWon > 0)
                     {
                         bank += bet * costMultiplier * BETMULTIPLIER * hasWon;
                         Console.WriteLine($"You won {hasWon} times in {GAME_MODE_ALL} mode!");
                     }
+                        else
+                        {
                     Console.WriteLine($"No matches in {GAME_MODE_ALL} mode.");
                 }
+                    }
 
                 Console.WriteLine();
                 Console.WriteLine($"Game mode: {gameMode}");
