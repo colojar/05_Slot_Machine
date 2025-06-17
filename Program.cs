@@ -4,6 +4,7 @@
     {
         static void Main()
         {
+            // Currently only a square odd sized grid is supported (3x3, 5x5, etc)
             const int ROWS = 3;
             const int COLUMNS = 3;
             const string GAME_MODE_CENTER = "center";
@@ -78,55 +79,58 @@
                 Console.WriteLine($"Your current bank: {bank}");
                 Console.WriteLine();
 
-                while (true)
+                if (gameMode == "")
                 {
-                    Console.WriteLine("Choose a gamemode. 0-5");
-                    Console.WriteLine($"{QUIT_NUM}: Exit the game.");
-                    Console.WriteLine($"{GAME_MODE_CENTER_NUM}. {char.ToUpper(GAME_MODE_CENTER[0]) + GAME_MODE_CENTER[1..]}");
-                    Console.WriteLine($"{GAME_MODE_HORIZONTAL_NUM}. {char.ToUpper(GAME_MODE_HORIZONTAL[0]) + GAME_MODE_HORIZONTAL[1..]}");
-                    Console.WriteLine($"{GAME_MODE_VERTICAL_NUM}. {char.ToUpper(GAME_MODE_VERTICAL[0]) + GAME_MODE_VERTICAL[1..]}");
-                    Console.WriteLine($"{GAME_MODE_DIAGONAL_NUM}. {char.ToUpper(GAME_MODE_DIAGONAL[0]) + GAME_MODE_DIAGONAL[1..]}");
-                    Console.WriteLine($"{GAME_MODE_ALL_NUM}. {char.ToUpper(GAME_MODE_ALL[0]) + GAME_MODE_ALL[1..]}");
-                    Console.Write("Enter your choice (0-5): ");
-                    string? choice = Console.ReadLine();
-                    if (int.TryParse(choice, out int mode))
+                    while (true)
                     {
-                        switch (mode)
+                        Console.WriteLine("Choose a gamemode. 0-5");
+                        Console.WriteLine($"{QUIT_NUM}: Exit the game.");
+                        Console.WriteLine($"{GAME_MODE_CENTER_NUM}. {char.ToUpper(GAME_MODE_CENTER[0]) + GAME_MODE_CENTER[1..]}");
+                        Console.WriteLine($"{GAME_MODE_HORIZONTAL_NUM}. {char.ToUpper(GAME_MODE_HORIZONTAL[0]) + GAME_MODE_HORIZONTAL[1..]}");
+                        Console.WriteLine($"{GAME_MODE_VERTICAL_NUM}. {char.ToUpper(GAME_MODE_VERTICAL[0]) + GAME_MODE_VERTICAL[1..]}");
+                        Console.WriteLine($"{GAME_MODE_DIAGONAL_NUM}. {char.ToUpper(GAME_MODE_DIAGONAL[0]) + GAME_MODE_DIAGONAL[1..]}");
+                        Console.WriteLine($"{GAME_MODE_ALL_NUM}. {char.ToUpper(GAME_MODE_ALL[0]) + GAME_MODE_ALL[1..]}");
+                        Console.Write("Enter your choice (0-5): ");
+                        string? choice = Console.ReadLine();
+                        if (int.TryParse(choice, out int mode))
                         {
-                            case 0:
-                                nextMessage = "Exiting the game. Thank you for playing!";
-                                quit = 1;
-                                break;
-                            case 1:
-                                Console.WriteLine($"You chose '{GAME_MODE_CENTER}' mode. Cost: {COST_CENTER * bet}");
-                                gameMode = GAME_MODE_CENTER;
-                                costMultiplier = COST_CENTER;
-                                break;
-                            case 2:
-                                Console.WriteLine($"You chose '{GAME_MODE_HORIZONTAL}' mode. Cost: {COST_HORIZONTAL * bet}");
-                                gameMode = GAME_MODE_HORIZONTAL;
-                                costMultiplier = COST_HORIZONTAL;
-                                break;
-                            case 3:
-                                Console.WriteLine($"You chose '{GAME_MODE_VERTICAL}' mode. Cost: {COST_VERTICAL * bet}");
-                                gameMode = GAME_MODE_VERTICAL;
-                                costMultiplier = COST_VERTICAL;
-                                break;
-                            case 4:
-                                Console.WriteLine($"You chose '{GAME_MODE_DIAGONAL}' mode. Cost: {COST_DIAGONAL * bet}");
-                                gameMode = GAME_MODE_DIAGONAL;
-                                costMultiplier = COST_DIAGONAL;
-                                break;
-                            case 5:
-                                Console.WriteLine($"You chose '{GAME_MODE_ALL}' mode. Cost: {COST_ALL * bet}");
-                                gameMode = GAME_MODE_ALL;
-                                costMultiplier = COST_ALL;
-                                break;
-                            default:
-                                nextMessage = "Invalid choice. Please enter a number between 1 and 5.";
-                                continue; // Prompt for choice again
+                            switch (mode)
+                            {
+                                case 0:
+                                    nextMessage = "Exiting the game. Thank you for playing!";
+                                    quit = 1;
+                                    break;
+                                case 1:
+                                    Console.WriteLine($"You chose '{GAME_MODE_CENTER}' mode. Cost: {COST_CENTER * bet}");
+                                    gameMode = GAME_MODE_CENTER;
+                                    costMultiplier = COST_CENTER;
+                                    break;
+                                case 2:
+                                    Console.WriteLine($"You chose '{GAME_MODE_HORIZONTAL}' mode. Cost: {COST_HORIZONTAL * bet}");
+                                    gameMode = GAME_MODE_HORIZONTAL;
+                                    costMultiplier = COST_HORIZONTAL;
+                                    break;
+                                case 3:
+                                    Console.WriteLine($"You chose '{GAME_MODE_VERTICAL}' mode. Cost: {COST_VERTICAL * bet}");
+                                    gameMode = GAME_MODE_VERTICAL;
+                                    costMultiplier = COST_VERTICAL;
+                                    break;
+                                case 4:
+                                    Console.WriteLine($"You chose '{GAME_MODE_DIAGONAL}' mode. Cost: {COST_DIAGONAL * bet}");
+                                    gameMode = GAME_MODE_DIAGONAL;
+                                    costMultiplier = COST_DIAGONAL;
+                                    break;
+                                case 5:
+                                    Console.WriteLine($"You chose '{GAME_MODE_ALL}' mode. Cost: {COST_ALL * bet}");
+                                    gameMode = GAME_MODE_ALL;
+                                    costMultiplier = COST_ALL;
+                                    break;
+                                default:
+                                    nextMessage = "Invalid choice. Please enter a number between 1 and 5.";
+                                    continue; // Prompt for choice again
+                            }
+                            break; // Exit the loop if a valid choice is made
                         }
-                        break; // Exit the loop if a valid choice is made
                     }
                 }
                 if (quit == 1)
@@ -134,74 +138,81 @@
                     continue;
                 }
 
-                Console.Clear();
-                Console.WriteLine();
-                Console.WriteLine($"Game mode: {gameMode}");
-                Console.WriteLine($"Your current bank: {bank}");
-                Console.WriteLine();
-
                 while (true)
                 {
-                    Console.Write("Enter your bet (0 to exit): ");
-                    string? input = Console.ReadLine();
-
-                    if (int.TryParse(input, out bet) && (bet + costMultiplier) >= 0 && (bet * costMultiplier) <= bank)
-                    {
-                        bank -= bet * costMultiplier; // Deduct the bet amount from the bank
-                        break;
-                    }
-                    if (bet * costMultiplier > bank)
-                    {
-                        Console.WriteLine("Insufficient funds. Please enter a valid bet.");
-                    }
-                    if (bet == 0)
-                    {
-                        Console.WriteLine("Exiting the game. Thank you for playing!");
-                        return; // Exit the game
-                    }
-                    Console.WriteLine("Invalid bet. Please enter a valid amount.");
-                }
-
-                Console.Clear();
-                Console.WriteLine();
-                Console.WriteLine($"Game mode: {gameMode}");
-                Console.WriteLine($"Your current bank: {bank}");
-                Console.WriteLine($"Your bet: {bet} (Cost: {costMultiplier * bet})");
-                Console.WriteLine();
-
-                // Generate a grid
-                int[,] slotMachine = new int[ROWS, COLUMNS];
-                for (int i = 0; i < ROWS; i++)
-                {
-                    for (int j = 0; j < COLUMNS; j++)
-                    {
-                        slotMachine[i, j] = random.Next(1, 10);
-                    }
-                }
-
-                // Display the slot machine
-                string rowSeparator = "+";
-                for (int j = 0; j < COLUMNS; j++)
-                {
-                    rowSeparator += "---+";
-                }
-                for (int i = 0; i < ROWS; i++)
-                {
-                    Console.WriteLine(rowSeparator);
-                    Console.Write("|");
-                    for (int j = 0; j < COLUMNS; j++)
-                    {
-                        Console.Write($" {slotMachine[i, j]} |");
-                    }
+                    Console.Clear();
                     Console.WriteLine();
-                }
-                Console.WriteLine(rowSeparator);
+                    Console.WriteLine($"Game mode: {gameMode}");
+                    Console.WriteLine($"Your current bank: {bank}");
+                    Console.WriteLine();
 
-                // Checking for matches
-                int hasWon = 0;
-                if (gameMode == GAME_MODE_CENTER)
-                {
-                    // Check center column
+                    while (true)
+                    {
+                        Console.Write("Enter your bet (0 to exit): ");
+                        string? input = Console.ReadLine();
+
+                        if (int.TryParse(input, out bet) && (bet + costMultiplier) >= 0 && (bet * costMultiplier) <= bank)
+                        {
+                            bank -= bet * costMultiplier; // Deduct the bet amount from the bank
+                            break;
+                        }
+                        if (bet * costMultiplier > bank)
+                        {
+                            Console.WriteLine("Insufficient funds. Please enter a valid bet.");
+                        }
+                        if (bet == 0)
+                        {
+                            break;
+                        }
+                        Console.WriteLine("Invalid bet. Please enter a valid amount.");
+                    }
+                    if (bet == 0 )
+                    {
+                        nextMessage = "Exiting the game. Thank you for playing!";
+                        quit = 1; // Set quit to 1 to exit the game
+                        break; // Exit the inner loop to allow quitting
+                    }
+
+                    Console.Clear();
+                    Console.WriteLine();
+                    Console.WriteLine($"Game mode: {gameMode}");
+                    Console.WriteLine($"Your current bank: {bank}");
+                    Console.WriteLine($"Your bet: {bet} (Cost: {costMultiplier * bet})");
+                    Console.WriteLine();
+
+                    // Generate a grid
+                    int[,] slotMachine = new int[ROWS, COLUMNS];
+                    for (int i = 0; i < ROWS; i++)
+                    {
+                        for (int j = 0; j < COLUMNS; j++)
+                        {
+                            slotMachine[i, j] = random.Next(1, 10);
+                        }
+                    }
+
+                    // Display the slot machine
+                    string rowSeparator = "+";
+                    for (int j = 0; j < COLUMNS; j++)
+                    {
+                        rowSeparator += "---+";
+                    }
+                    for (int i = 0; i < ROWS; i++)
+                    {
+                        Console.WriteLine(rowSeparator);
+                        Console.Write("|");
+                        for (int j = 0; j < COLUMNS; j++)
+                        {
+                            Console.Write($" {slotMachine[i, j]} |");
+                        }
+                        Console.WriteLine();
+                    }
+                    Console.WriteLine(rowSeparator);
+
+                    // Checking for matches
+                    int hasWon = 0;
+                    if (gameMode == GAME_MODE_CENTER)
+                    {
+                        // Check center column
                         int centerCol = COLUMNS / 2;
                         bool centerMatch = true;
                         for (int i = 1; i < ROWS; i++)
@@ -214,22 +225,22 @@
                         }
                         if (centerMatch) hasWon = 1;
 
-                    if (hasWon > 0)
-                    {
-                        bank += bet * costMultiplier * BETMULTIPLIER;
-                        Console.WriteLine($"You won {hasWon} times in {GAME_MODE_CENTER} mode!");
-                    }
+                        if (hasWon > 0)
+                        {
+                            bank += bet * costMultiplier * BETMULTIPLIER;
+                            Console.WriteLine($"You won {hasWon} times in {GAME_MODE_CENTER} mode!");
+                        }
                         else
                         {
-                    Console.WriteLine($"No matches in {GAME_MODE_CENTER} mode.");
+                            Console.WriteLine($"No matches in {GAME_MODE_CENTER} mode.");
                         }
-                   
-                }
-                if (gameMode == GAME_MODE_HORIZONTAL)
-                {
-                    // Check horizontal rows
-                    for (int i = 0; i < ROWS; i++)
+
+                    }
+                    if (gameMode == GAME_MODE_HORIZONTAL)
                     {
+                        // Check horizontal rows
+                        for (int i = 0; i < ROWS; i++)
+                        {
                             bool rowMatch = true;
                             for (int j = 1; j < COLUMNS; j++)
                             {
@@ -237,27 +248,27 @@
                                 {
                                     rowMatch = false;
                                     break;
-                    }
+                                }
                             }
                             if (rowMatch) hasWon += 1;
                         }
 
                         if (hasWon > 0)
                         {
-                    bank += bet * costMultiplier * BETMULTIPLIER * hasWon;
-                    Console.WriteLine($"You won {hasWon} times in {GAME_MODE_HORIZONTAL} mode!");
-                }
+                            bank += bet * costMultiplier * BETMULTIPLIER * hasWon;
+                            Console.WriteLine($"You won {hasWon} times in {GAME_MODE_HORIZONTAL} mode!");
+                        }
                         else
                         {
                             Console.WriteLine($"No matches in {GAME_MODE_HORIZONTAL} mode.");
                         }
                     }
 
-                if (gameMode == GAME_MODE_VERTICAL)
-                {
-                    // Check vertical columns
-                    for (int j = 0; j < COLUMNS; j++)
+                    if (gameMode == GAME_MODE_VERTICAL)
                     {
+                        // Check vertical columns
+                        for (int j = 0; j < COLUMNS; j++)
+                        {
                             bool colMatch = true;
                             for (int i = 1; i < ROWS; i++)
                             {
@@ -265,23 +276,23 @@
                                 {
                                     colMatch = false;
                                     break;
-                    }
+                                }
                             }
                             if (colMatch) hasWon += 1;
                         }
 
-                    if (hasWon > 0)
-                    {
-                        bank += bet * costMultiplier * BETMULTIPLIER * hasWon;
-                        Console.WriteLine($"You won {hasWon} times in {GAME_MODE_VERTICAL} mode!");
-                    }
+                        if (hasWon > 0)
+                        {
+                            bank += bet * costMultiplier * BETMULTIPLIER * hasWon;
+                            Console.WriteLine($"You won {hasWon} times in {GAME_MODE_VERTICAL} mode!");
+                        }
                         else
                         {
-                    Console.WriteLine($"No matches in {GAME_MODE_VERTICAL} mode.");
-                }
+                            Console.WriteLine($"No matches in {GAME_MODE_VERTICAL} mode.");
+                        }
                     }
-                if (gameMode == GAME_MODE_DIAGONAL)
-                {
+                    if (gameMode == GAME_MODE_DIAGONAL)
+                    {
                         // Top-left to bottom-right
                         bool diag1Match = true;
                         for (int i = 1; i < Math.Min(ROWS, COLUMNS); i++)
@@ -306,34 +317,34 @@
                         }
                         if (diag2Match) hasWon += 1;
 
-                    if (hasWon > 0)
-                    {
-                        bank += bet * costMultiplier * BETMULTIPLIER * hasWon;
-                        Console.WriteLine($"You won {hasWon} times in {GAME_MODE_DIAGONAL} mode!");
-                    }
+                        if (hasWon > 0)
+                        {
+                            bank += bet * costMultiplier * BETMULTIPLIER * hasWon;
+                            Console.WriteLine($"You won {hasWon} times in {GAME_MODE_DIAGONAL} mode!");
+                        }
                         else
                         {
-                    Console.WriteLine($"No matches in {GAME_MODE_DIAGONAL} mode.");
-                }
+                            Console.WriteLine($"No matches in {GAME_MODE_DIAGONAL} mode.");
+                        }
                     }
-                if (gameMode == GAME_MODE_ALL)
-                {
-                    // Check center column
+                    if (gameMode == GAME_MODE_ALL)
+                    {
+                        // Check center column
                         int centerCol = COLUMNS / 2;
                         bool centerMatch = true;
                         for (int i = 1; i < ROWS; i++)
-                    {
+                        {
                             if (slotMachine[i, centerCol] != slotMachine[0, centerCol])
                             {
                                 centerMatch = false;
                                 break;
                             }
-                    }
+                        }
                         if (centerMatch) hasWon = 1;
 
-                    // Check horizontal rows
-                    for (int i = 0; i < ROWS; i++)
-                    {
+                        // Check horizontal rows
+                        for (int i = 0; i < ROWS; i++)
+                        {
                             bool rowMatch = true;
                             for (int j = 1; j < COLUMNS; j++)
                             {
@@ -344,11 +355,11 @@
                                 }
                             }
                             if (rowMatch) hasWon += 1;
-                    }
+                        }
 
-                    // Check vertical columns
-                    for (int j = 0; j < COLUMNS; j++)
-                    {
+                        // Check vertical columns
+                        for (int j = 0; j < COLUMNS; j++)
+                        {
                             bool colMatch = true;
                             for (int i = 1; i < ROWS; i++)
                             {
@@ -381,38 +392,39 @@
                             {
                                 diag2Match = false;
                                 break;
-                    }
+                            }
                         }
                         if (diag2Match) hasWon += 1;
 
-                    if (hasWon > 0)
-                    {
-                        bank += bet * costMultiplier * BETMULTIPLIER * hasWon;
-                        Console.WriteLine($"You won {hasWon} times in {GAME_MODE_ALL} mode!");
-                    }
+                        if (hasWon > 0)
+                        {
+                            bank += bet * costMultiplier * BETMULTIPLIER * hasWon;
+                            Console.WriteLine($"You won {hasWon} times in {GAME_MODE_ALL} mode!");
+                        }
                         else
                         {
-                    Console.WriteLine($"No matches in {GAME_MODE_ALL} mode.");
-                }
+                            Console.WriteLine($"No matches in {GAME_MODE_ALL} mode.");
+                        }
                     }
 
-                Console.WriteLine();
-                Console.WriteLine($"Game mode: {gameMode}");
-                Console.WriteLine($"Your current bank: {bank}");
-                Console.WriteLine();
-
-                while (true)
-                {
-                    Console.WriteLine("Press enter to continue or 0 to exit the game.");
-                    string? input = Console.ReadLine();
-                    if (input == "0")
+                    while (true)
                     {
-                        Console.WriteLine("Exiting the game. Thank you for playing!");
-                        return; // Exit the game
+                        Console.WriteLine("Press enter to continue or 0 to change the gamemode.");
+                        string? input = Console.ReadLine();
+                        if (input == "0")
+                        {
+                            nextMessage = "Changing the gamemode.";
+                            gameMode = ""; // Reset quit to allow changing gamemode
+                            break;
+                        }
+                        if (string.IsNullOrEmpty(input))
+                        {
+                            break; // Continue to the next iteration of the loop
+                        }
                     }
-                    if (string.IsNullOrEmpty(input))
+                    if (gameMode == "")
                     {
-                        break; // Continue to the next iteration of the loop
+                        break; // Exit the inner loop to allow changing gamemode
                     }
                 }
             }
