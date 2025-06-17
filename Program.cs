@@ -11,12 +11,19 @@
             const string GAME_MODE_VERTICAL = "vertical";
             const string GAME_MODE_DIAGONAL = "diagonal";
             const string GAME_MODE_ALL = "all";
+            const int QUIT_NUM = 0;
+            const int GAME_MODE_CENTER_NUM = 1;
+            const int GAME_MODE_HORIZONTAL_NUM = 2;
+            const int GAME_MODE_VERTICAL_NUM = 3;
+            const int GAME_MODE_DIAGONAL_NUM = 4;
+            const int GAME_MODE_ALL_NUM = 5;
             const int COST_CENTER = 1;
             const int COST_HORIZONTAL = 2;
             const int COST_VERTICAL = 2;
             const double COST_DIAGONAL = 1.5;
             const int COST_ALL = 3;
             const int BETMULTIPLIER = 2;
+            const int STARTING_BANK = 10;
 
             List<string> intro = [
                 "05 - Slot Machine",
@@ -27,11 +34,12 @@
                 "your bet and winnings will be priced accordingly.",
                 "",
                 "Game Modes:",
-                "1. Center: Match the center column.        Cost: 1 x bet.",
-                "2. Horizontal: Match any row.              Cost: 2 x bet.",
-                "3. Vertical: Match any column.             Cost: 2 x bet.",
-                "4. Diagonal: Match the diagonal lines.     Cost: 1.5 x bet.",
-                "5. All: Match all of the above.            Cost: 3 x bet",
+                $"{QUIT_NUM}. Exit the game.",
+                $"{GAME_MODE_CENTER_NUM}. {char.ToUpper(GAME_MODE_CENTER[0]) + GAME_MODE_CENTER[1..]}: Match the center column.        Cost: {COST_CENTER} x bet.",
+                $"{GAME_MODE_HORIZONTAL_NUM}. {char.ToUpper(GAME_MODE_HORIZONTAL[0]) + GAME_MODE_HORIZONTAL[1..]}: Match any row.              Cost: {COST_HORIZONTAL} x bet.",
+                $"{GAME_MODE_VERTICAL_NUM}. {char.ToUpper(GAME_MODE_VERTICAL[0]) + GAME_MODE_VERTICAL[1..]}: Match any column.             Cost: {COST_VERTICAL} x bet.",
+                $"{GAME_MODE_DIAGONAL_NUM}. {char.ToUpper(GAME_MODE_DIAGONAL[0]) + GAME_MODE_DIAGONAL[1..]}: Match the diagonal lines.     Cost: {COST_DIAGONAL} x bet.",
+                $"{GAME_MODE_ALL_NUM}. {char.ToUpper(GAME_MODE_ALL[0]) + GAME_MODE_ALL[1..]}: Match all of the above.            Cost: {COST_ALL} x bet",
                 "",
                 "You can exit the game at any time by entering 0 as your bet.",
                 "Good luck and have fun!"
@@ -45,10 +53,11 @@
                 Console.WriteLine(line);
             }
             int bet = 0;
-            double bank = 10; // Starting bank amount
-            double costMultiplier = 1; // Multiplier for the cost of the game mode
+            double bank = STARTING_BANK; // Starting bank amount
             string gameMode = ""; // Variable to store the selected gamemode
             string nextMessage = ""; // Variable to store the message for the next iteration of the loop
+            double costMultiplier = 1; // Variable to store the cost multiplier based on the selected gamemode
+            int quit = 0; // Variable to track if the user wants to exit the game
 
             while (true)
             {
@@ -66,14 +75,14 @@
                 }
                 while (true)
                 {
-                    Console.WriteLine("Choose a gamemode. 1-5");
-                    Console.WriteLine("0: Exit the game.");
-                    Console.WriteLine($"1. {GAME_MODE_CENTER}");
-                    Console.WriteLine($"2. {GAME_MODE_HORIZONTAL}");
-                    Console.WriteLine($"3. {GAME_MODE_VERTICAL}");
-                    Console.WriteLine($"4. {GAME_MODE_DIAGONAL}");
-                    Console.WriteLine($"5. {GAME_MODE_ALL}");
-                    Console.Write("Enter your choice (1-5): ");
+                    Console.WriteLine("Choose a gamemode. 0-5");
+                    Console.WriteLine($"{QUIT_NUM}: Exit the game.");
+                    Console.WriteLine($"{GAME_MODE_CENTER_NUM}. {char.ToUpper(GAME_MODE_CENTER[0]) + GAME_MODE_CENTER[1..]}");
+                    Console.WriteLine($"{GAME_MODE_HORIZONTAL_NUM}. {char.ToUpper(GAME_MODE_HORIZONTAL[0]) + GAME_MODE_HORIZONTAL[1..]}");
+                    Console.WriteLine($"{GAME_MODE_VERTICAL_NUM}. {char.ToUpper(GAME_MODE_VERTICAL[0]) + GAME_MODE_VERTICAL[1..]}");
+                    Console.WriteLine($"{GAME_MODE_DIAGONAL_NUM}. {char.ToUpper(GAME_MODE_DIAGONAL[0]) + GAME_MODE_DIAGONAL[1..]}");
+                    Console.WriteLine($"{GAME_MODE_ALL_NUM}. {char.ToUpper(GAME_MODE_ALL[0]) + GAME_MODE_ALL[1..]}");
+                    Console.Write("Enter your choice (0-5): ");
                     string? choice = Console.ReadLine();
                     if (int.TryParse(choice, out int mode))
                     {
