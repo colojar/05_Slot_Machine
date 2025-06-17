@@ -409,6 +409,7 @@
 
                     while (true)
                     {
+                        Console.WriteLine();
                         Console.WriteLine("Press enter to continue or 0 to change the gamemode.");
                         string? input = Console.ReadLine();
                         if (input == "0")
