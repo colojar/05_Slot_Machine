@@ -23,7 +23,7 @@
             const double COST_DIAGONAL = 1.5;
             const int COST_ALL = 3;
             const int BETMULTIPLIER = 2;
-            const int STARTING_BANK = 10;
+            const int STARTING_BANK = 100;
 
             List<string> intro = [
                 "05 - Slot Machine",
