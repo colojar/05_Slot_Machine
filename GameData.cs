@@ -1,4 +1,4 @@
-// Data.cs
+// GameData.cs
 namespace _05_Slot_Machine
 {
     internal static class GameData
@@ -48,7 +48,5 @@ namespace _05_Slot_Machine
         Good luck and have fun!
         ========================================================================
         ";
-
-
     }
 }

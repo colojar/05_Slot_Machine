@@ -69,6 +69,11 @@ namespace _05_Slot_Machine
                     }
                     return (gameMode, costMultiplier, quit, nextMessage);
                 }
+                else
+                {
+                    nextMessage = "Invalid input. Please enter a number between 0 and 5.";
+                    Console.WriteLine(nextMessage);
+                }
             }
         }
     }
